@@ -1,46 +1,46 @@
 #include <iostream>
-#include "Foo.h"
-#include <functional>
-int f(int x)
-{
-	return	x + 3;
-}
-int g(int x)
-{
-	return x * x;
-}
-int calc(int(*fx)(int),int(*gx)(int), int b)
-{
-	return fx(gx(b));
-}
-void function(int a)
-{
-	std::cout << " toto : " << a << std::endl;
-}
-
-void foo(void(*fn)(int), int b)
-{
-	fn(b);
-}
-int composestd(const std::function<int(int)>& fn, const std::function<int(int)>& gn, int x)
-{
-	return fn(gn(x));
-}
-std::function<int(int)> composestdfunction(const std::function<int(int)>& fn, const std::function<int(int)>& gn)
-{
-	return [&](int x)->int { return fn(gn(x)); };
-}
+#include "mediatheque.h"
 int main()
 {
-	composestdfunction(f, g)(3);
-	int toto = 2;
-	std::cout << composestd(f, [&](int x)->int {return x * x + toto; }, 5);
-	/*std::cout << calc(g,f, 3);*/
-	foo(function, 3);
-	//GameObjectFactory factory;
-	//auto* entyty = factory.create("Player");
-	//entyty->description();
-	////Foo::display();
-	//delete entyty;
+
+	bibliothecaire m_bibliothequere(new mediatheque);
+	std::string address = "45 sentes des radoubs";
+	m_bibliothequere.CreateClientAccount("Arthur", "Blanchet", 18, "45 sentes des radoubs", "0643506540");
+	m_bibliothequere.CreateClientAccount("Arthur", "Blanchet", 18, "45 sentes des radoubs", "0643506540");
+	m_bibliothequere.CreateClientAccount("zaza", "Blanchet", 18, "45 sentes des radoubs", "0643506540");
+	int age = 19;
+	std::cout << "//////////////////////////////////" << std::endl;
+	m_bibliothequere.showclientbyname("Arthur");
+	std::cout << "//////////////////////////////////" << std::endl;
+	m_bibliothequere.showallclient();
+	std::cout << "//////////////////////////////////" << std::endl;
+	m_bibliothequere.removebyname("Arthur");
+	m_bibliothequere.showallclient();
+	std::cout << "//////////////////////////////////" << std::endl;
+	m_bibliothequere.createBook("lelivredelajungle", "DSDJQZE323");
+	m_bibliothequere.createBook("lelivrepouetpouet", "DSDJQZE323");
+	m_bibliothequere.createBook("lelivrecrapeau", "DSDJQZE323");
+	m_bibliothequere.removeVideoGamebytitle("lelivredelajungle");
+	m_bibliothequere.showallmedia();
+	std::cout << "//////////////////////////////////" << std::endl;
+
+	/*Client* client = new Client("aea", "dzqd",53534,"dzq","dqsd");
+	Media* media = new Book("sqetset","dqsdqd");
+	NodeList list;
+	ClientNode* myclient = new ClientNode(client );
+	MediaNode* nymedia = new MediaNode(media);
+	list.PushBack(myclient);
+	list.PushBack(nymedia);
+	auto clientmodif = static_cast<ClientNode*>(list[0]);
+	std::cout <<list[0]->getObject()->gettype();
+	std::cout << list[1]->getObject()->gettype();
+	if (list[1]->getObject()->gettype() == 1)
+	{
+		auto mediamodif = static_cast<Media*>(list[1]->getObject());
+		auto book = static_cast<Book*> (mediamodif);
+
+	}
+	std::cout << "hello world" << std::endl;
+	return 0;*/
 	return 0;
 }

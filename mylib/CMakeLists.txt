@@ -5,10 +5,12 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 
 set(HEADERS
- ${HEADER_DIR}/Foo.h
+ ${HEADER_DIR}/mediatheque.h
+${HEADER_DIR}/Object.h
 )
 set(SOURCES
- ${SOURCE_DIR}/Foo.cpp
+ ${SOURCE_DIR}/mediatheque.cpp
+${SOURCE_DIR}/Object.cpp
 )
 
 add_library(${PROJECT_NAME}
