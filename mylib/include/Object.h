@@ -80,12 +80,31 @@ public:
 	//phoneNumber
 	void changephoneNumber(std::string newphoneNumber) { m_phoneNumber = newphoneNumber; }
 	std::string& getphoneNumber() { return m_phoneNumber; }
+	// rent media
+	void addmedia(Media* media){m_rent.push_back(media);}
+	void removemedia(Media* media)
+	{
+		for (auto it = m_rent.begin(); it != m_rent.end();)
+		{
+			if (*it == media)
+			{
+				it = m_rent.erase(it);
+				break;
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+	std::vector<Media*> getmediarent() { return m_rent; }
 private:
 	std::string m_name;
 	std::string m_firstname;
 	int m_age;
 	std::string m_address;
 	std::string m_phoneNumber;
+	std::vector<Media*> m_rent;
 
 	/*std::vector<Media> m_emprund;*/
 };

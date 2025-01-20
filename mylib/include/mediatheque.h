@@ -432,11 +432,18 @@ private:
 		else
 			return false;
 	}
+	void rentmedia(Client* client, std::vector<Media*> list)
+	{
+		for (auto& listidx : list)
+		{
+			client->addmedia(listidx);
+		}
+	}
 	//vecteur de client
 	std::vector<Client*> m_client;
 	//vecteur de mediat
 	std::vector<Media*> m_media;
-};
+}; 
 class bibliothecaire
 {
 public:
