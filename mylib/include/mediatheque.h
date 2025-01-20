@@ -129,7 +129,7 @@ public:
 		std::vector<Media*> tmplist;
 		for (auto& media : list)
 		{
-			if (media->getMediatype() == book);
+			if (media->getMediatype() == book)
 			tmplist.push_back(static_cast<Media*>(media));
 		}
 		return tmplist;
@@ -139,7 +139,7 @@ public:
 		std::vector<Media*> tmplist;
 		for (auto& media : list)
 		{
-			if (media->getMediatype() == film);
+			if (media->getMediatype() == film)
 			tmplist.push_back(static_cast<Media*>(media));
 		}
 		return tmplist;
@@ -149,7 +149,7 @@ public:
 		std::vector<Media*> tmplist;
 		for (auto& media : list)
 		{
-			if (media->getMediatype() == game);
+			if (media->getMediatype() == game)
 			tmplist.push_back(static_cast<Media*>(media));
 		}
 		return tmplist;
@@ -310,8 +310,32 @@ public:
 		}
 		return tmplist;
 	}
-
-
+	std::vector<Media*> createcombinemedialist(std::vector<Media*> liste1 , std::vector<Media*> liste2)
+	{
+		std::vector<Media*>tmplist;
+		for (auto& lise1idx : liste1)
+		{
+			for (auto& list2idx : liste2)
+			{
+				if (Bookbind(lise1idx, list2idx) || Filmbind(lise1idx, list2idx) || VideoGamebind(lise1idx, list2idx))
+					tmplist.push_back(lise1idx);
+			}
+		}
+		return tmplist;
+	}
+	std::vector<Client*> createcombineclientlist(std::vector<Client*> liste1, std::vector<Client*> liste2)
+	{
+		std::vector<Client*>tmplist;
+		for (auto& lise1idx : liste1)
+		{
+			for (auto& list2idx : liste2)
+			{
+				if (clientbind(lise1idx, list2idx))
+					tmplist.push_back(lise1idx);
+			}
+		}
+		return tmplist;
+	}
 
 private:
 	void showclient(Client* client)
