@@ -51,58 +51,36 @@ protected:
 class Client :public Object
 {
 public:
-	Client(std::string name, std::string firstname, int age, std::string address, std::string phoneNumber)
-		:m_name(name)
-		, m_firstname(firstname)
-		, m_age(age)
-		, m_address(address)
-		, m_phoneNumber(phoneNumber)
-	{
-		m_type = Client_type;
-	}
+	Client(std::string name, std::string firstname, int age, std::string address, std::string phoneNumber);
 	~Client()
 	{
 	}
 	//implementation
-	object_type gettype() override { return m_type; }
+	object_type gettype() override;
 	//name
-	void changename(std::string newname) { m_name = newname; }
-	std::string& getname() { return m_name; }
+	void changename(std::string newname);
+	std::string& getname();
 	//firstname
-	void changefirstname(std::string newfirstname) { m_firstname = newfirstname; }
-	std::string& getfirstname() { return m_firstname; }
+	void changefirstname(std::string newfirstname);
+	std::string& getfirstname();
 	//age
-	void changeage(int newage) { m_age = newage; }
-	int getage() { return m_age; }
+	void changeage(int newage);
+	int getage();
 	//address
-	void changeaddress(std::string newaddress) { m_address = newaddress; }
-	std::string& getaddress() { return m_address; }
+	void changeaddress(std::string newaddress);
+	std::string& getaddress();
 	//phoneNumber
-	void changephoneNumber(std::string newphoneNumber) { m_phoneNumber = newphoneNumber; }
-	std::string& getphoneNumber() { return m_phoneNumber; }
+	void changephoneNumber(std::string newphoneNumber);
+	std::string& getphoneNumber();
 	// rent media
-	void addmedia(Media* media){m_rent.push_back(media);}
-	void removemedia(Media* media)
-	{
-		for (auto it = m_rent.begin(); it != m_rent.end();)
-		{
-			if (*it == media)
-			{
-				it = m_rent.erase(it);
-				break;
-			}
-			else
-			{
-				++it;
-			}
-		}
-	}
-	std::vector<Media*> getmediarent() { return m_rent; }
+	void addmedia(Media* media);
+	void removemedia(Media* media);
+	std::vector<Media*> getmediarent();
 private:
 	std::string m_name;
 	std::string m_firstname;
 	int m_age;
-	std::string m_address;
+	std::string m_addressMail;
 	std::string m_phoneNumber;
 	std::vector<Media*> m_rent;
 
@@ -111,9 +89,9 @@ private:
 class Media :public Object
 {
 public:
-	Media() { m_type = Media_type; m_status = available; }
+	Media();
 	//implementation
-	object_type gettype() override { return m_type; }
+	object_type gettype() override;
 	//Mediatype
 	virtual Mediatype getMediatype() = 0;
 	virtual std::string& getTitle() = 0;
@@ -126,39 +104,39 @@ protected:
 class Book : public Media
 {
 public:
-	Book(std::string Title, std::string ISBN) :m_ISBN(ISBN) { m_mediatype = book;  m_title = Title; }
+	Book(std::string Title, std::string ISBN);
 	//implementation
-	Mediatype getMediatype() override { return m_mediatype; }
-	std::string& getTitle() override { return m_title; }
-	status getStatus() override { return m_status; }
+	Mediatype getMediatype() override;
+	std::string& getTitle() override;
+	status getStatus() override;
 	//Title
-	void changeTitle(std::string& newTitle) { m_title = newTitle; }
+	void changeTitle(std::string& newTitle);
 	//Status
-	void changeStatus(status newstatus) { m_status = newstatus; }
+	void changeStatus(status newstatus);
 	//ISBN
-	void changeISBN(std::string& newTitle) { m_ISBN = newTitle; }
-	std::string& getISBN() { return m_ISBN; }
+	void changeISBN(std::string& newTitle);
+	std::string& getISBN();
 private:
 	std::string m_ISBN;
 };
 class Film : public Media
 {
 public:
-	Film(std::string Title, Film_Support support, int agerestriction) :m_support(support), m_agerestriction(agerestriction) { m_mediatype = film;  m_title = Title; }
+	Film(std::string Title, Film_Support support, int agerestriction);
 	//implementation
-	Mediatype getMediatype() override { return m_mediatype; }
-	std::string& getTitle() override { return m_title; }
-	status getStatus() override { return m_status; }
+	Mediatype getMediatype() override;
+	std::string& getTitle() override;
+	status getStatus() override;
 	//Title
-	void changeTitle(std::string& newTitle) { m_title = newTitle; }
+	void changeTitle(std::string& newTitle);
 	//Status
-	void changeStatus(status newstatus) { m_status = newstatus; }
+	void changeStatus(status newstatus);
 	//Support
-	void changeSupport(Film_Support newsupport) { m_support = newsupport; }
-	Film_Support& getSupport() { return m_support; }
+	void changeSupport(Film_Support newsupport);
+	Film_Support& getSupport();
 	//Restriction
-	void changeAgeRestriction(int newrestriction) { m_agerestriction = newrestriction; }
-	int& getAgeRestriction() { return m_agerestriction; }
+	void changeAgeRestriction(int newrestriction);
+	int& getAgeRestriction();
 private:
 	Film_Support m_support;
 	int m_agerestriction;
@@ -166,24 +144,25 @@ private:
 class VideoGame : public Media
 {
 public:
-	VideoGame(std::string Title, game_Studio studio, int Pegi, game_gender gender) :m_studio(studio), m_pegi(Pegi), m_gender(gender) { m_mediatype = game;  m_title = Title; }
+	VideoGame(std::string Title, game_Studio studio, int Pegi, game_gender gender);
 	//implementation
-	Mediatype getMediatype() override { return m_mediatype; }
-	std::string& getTitle() override { return m_title; }
-	status getStatus() override { return m_status; }
+	Mediatype getMediatype() override;
+	std::string& getTitle() override;
+	status getStatus() override;
+
+	void changeTitle(std::string& newTitle);
 	//Title
-	void changeTitle(std::string& newTitle) { m_title = newTitle; }
 	//Status
-	void changeStatus(status newstatus) { m_status = newstatus; }
+	void changeStatus(status newstatus);
 	//Studio
-	void changeStudio(game_Studio newstudio) { m_studio = newstudio; }
-	game_Studio& getStudio() { return m_studio; }
+	void changeStudio(game_Studio newstudio);
+	game_Studio& getStudio();
 	//Pegi
-	void changepegi(int newpegi) { m_pegi = newpegi; }
-	int& getAgepegi() { return m_pegi; }
+	void changepegi(int newpegi);
+	int& getAgepegi();
 	//gender
-	void changeGender(game_gender newgender) { m_gender = newgender; }
-	game_gender& getGender() { return m_gender; }
+	void changeGender(game_gender newgender);
+	game_gender& getGender();
 private:
 	game_Studio m_studio;
 	int m_pegi;
