@@ -8,11 +8,13 @@ set(HEADERS
  ${HEADER_DIR}/mediatheque.h
 ${HEADER_DIR}/Object.h
 ${HEADER_DIR}/Consoleframebuffer.h
+${HEADER_DIR}/research.h
 )
 set(SOURCES
  ${SOURCE_DIR}/mediatheque.cpp
 ${SOURCE_DIR}/Object.cpp
 ${SOURCE_DIR}/Consoleframebuffer.cpp
+${SOURCE_DIR}/research.cpp
 )
 
 add_library(${PROJECT_NAME}

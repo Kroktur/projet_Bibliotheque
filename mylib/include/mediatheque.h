@@ -336,7 +336,19 @@ public:
 		}
 		return tmplist;
 	}
-
+	~mediatheque()
+	{
+		for (auto& client : m_client)
+		{
+			delete client;
+			client = nullptr;
+		}
+		for (auto& media : m_media)
+		{
+			delete media;
+			media = nullptr;
+		}
+	}
 private:
 	void showclient(Client* client)
 	{
@@ -567,7 +579,11 @@ public:
 	{
 		m_mediatheque->showdmedia(m_mediatheque->getallmedia());
 	}
-
+	~bibliothecaire()
+	{
+		delete m_mediatheque;
+		m_mediatheque = nullptr;
+	}
 
 private:
 	bool Clientalereadyexist(const std::string& name, const std::string& firstname, const int& age, const std::string& address, const std::string& phoneNumber)

@@ -50,7 +50,7 @@
 
 int main()
 {
-    ConsoleFramebufferPrivateImpl cfb;
+    ConsoleFramebuffer cfb;
     cfb.setString("zimbaboué");
     cfb.setString("tortue", White, Blue);
     cfb.setString("tortue");
