@@ -1,39 +1,11 @@
 #include <iostream>
 #include "mediatheque.h"
+#include "research.h"
 int main()
 {
-
-	bibliothecaire m_bibliothequere(new mediatheque);
-	std::string address = "45 sentes des radoubs";
-	m_bibliothequere.CreateClientAccount("Arthur", "Blanchet", 18, "45 sentes des radoubs", "0643506540");
-	int age = 19;
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.showclientbyname("Arthur");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.showallclient();
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.showallclient();
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.createBook("lelivredelajungle", "DSDJQZE323");
-	m_bibliothequere.createBook("lelivrepouetpouet", "dsdfdzqd");
-	m_bibliothequere.createBook("lelivrecrapeau", "gddgdg");
-	m_bibliothequere.showallmedia();
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.showClientRent("45 sentes des radoubs");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.rentBook("45 sentes des radoubs", "lelivredelajungle");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.Findbystatus("available");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.Findbystatus("borrowed");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.showClientRent("45 sentes des radoubs");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.Findbystatus("available");
-	std::cout << "//////////////////////////////////" << std::endl;
-	m_bibliothequere.ReturnBook("45 sentes des radoubs", "lelivredelajungle");
-	m_bibliothequere.Findbystatus("available");
-	std::cout << "//////////////////////////////////" << std::endl;
+	research reh;
+	reh.Exe();
+	
 
 	/*Client* client = new Client("aea", "dzqd",53534,"dzq","dqsd");
 	Media* media = new Book("sqetset","dqsdqd");
