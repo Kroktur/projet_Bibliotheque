@@ -1,11 +1,20 @@
 #include <iostream>
 #include "mediatheque.h"
 #include "research.h"
+#include "ObjectV2.h"
+#include "mediathequeV2.h"
 int main()
 {
-	Database data;
-	data.Exe();
-	
+	/*Database data;
+	data.Exe();*/
+	MediaLibrary mlb;
+	Client* Arthur = new Client{ "Arthur", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
+	Client* Arthur2 = new Client{ "Arthur", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
+	Client* Arthur3 = new Client{ "Zebre", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
+	mlb.addEntity(Arthur);
+	mlb.addEntity(Arthur2);
+	mlb.addEntity(Arthur3);
+	std::cout << mlb.EntityBind(Arthur, Arthur2);
 
 	/*Client* client = new Client("aea", "dzqd",53534,"dzq","dqsd");
 	Media* media = new Book("sqetset","dqsdqd");

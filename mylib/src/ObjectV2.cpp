@@ -48,6 +48,20 @@ std::string Client::getPhoneNumber() const
 {
 	return m_PhoneNumber;
 }
+bool Client::operator==(Client& client)
+{
+	if (m_Name != client.getName())
+		return false;
+	if (m_FirstName != client.getFirstName())
+		return false;
+	if (m_Age != client.getAge())
+		return false;
+	if (m_EmailAddress != client.getEmailAddress())
+		return false;
+	if (m_PhoneNumber != client.getPhoneNumber())
+		return false;
+	return true;
+}
 //IMedia
 
 IMedia::IMedia(std::string Title, Entity_Type Type):

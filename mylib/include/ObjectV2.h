@@ -52,6 +52,7 @@ public:
 	std::string getAge() const override;
 	std::string getEmailAddress() const override;
 	std::string getPhoneNumber() const override;
+	bool operator ==(Client& client);
 private:
 	std::vector<IMedia*> m_RentMedia;
 };

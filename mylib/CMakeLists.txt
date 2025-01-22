@@ -13,6 +13,7 @@ ${HEADER_DIR}/Operand.h
 ${HEADER_DIR}/interpreter.h
 ${HEADER_DIR}/Command.h
 ${HEADER_DIR}/ObjectV2.h
+${HEADER_DIR}/MediathequeV2.h
 )
 set(SOURCES
  ${SOURCE_DIR}/mediatheque.cpp
@@ -23,6 +24,7 @@ ${SOURCE_DIR}/Operand.cpp
 ${SOURCE_DIR}/interpreter.cpp
 ${SOURCE_DIR}/Command.cpp
 ${SOURCE_DIR}/ObjectV2.cpp
+${SOURCE_DIR}/MediathequeV2.cpp
 )
 
 add_library(${PROJECT_NAME}
