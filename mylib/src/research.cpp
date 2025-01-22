@@ -1,6 +1,6 @@
 #include "research.h"
 
-Database::Database():m_console(new ConsoleFramebuffer), m_Library(new MediaLibrary), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console, m_Library))
+Database::Database():m_console(new ConsoleFramebuffer), m_Library(new MediaLibrary), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console))
 {
 }
 
@@ -31,7 +31,7 @@ void Database::addstring(std::string str)
 {
 	if (!isNewCommand(str))
 		return;
-	m_Interpret->interpret(m_StringManager->RemoveEmptySpace(m_StringManager->CreateStringOperand(str)));
+	m_Interpret->interpret(m_StringManager->RemoveEmptySpace(m_StringManager->CreateStringOperand(str)),m_Library);
 }
 
 bool Database::isNewCommand(std::string str)

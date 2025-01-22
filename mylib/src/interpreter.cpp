@@ -1,5 +1,5 @@
 #include "interpreter.h"
-
+#include <stdexcept>
 stringInterpreterAndConverter::~stringInterpreterAndConverter()
 {
 
@@ -47,15 +47,43 @@ bool stringInterpreterAndConverter::isEmpty(std::string str)
 	return true;
 }
 
-OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console,MediaLibrary* lybrary):m_console(console),m_Lybrary(lybrary)
+OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console):m_console(console), m_factory(new IComandFactory)
 {
+    m_factory->registertype("Add", new AddCommand);
+    m_factory->registertype("Show", new ShowCommand);
 }
 
-void OperandInterpreter::interpret(std::vector<StringOperand*> operand)
+void OperandInterpreter::interpret(std::vector<StringOperand*> operand,MediaLibrary* library)
 {
-    if (operand[0]->getInformation() != "Hello")
-        return;
-
+    if (operand[0]->getInformation() == "Hello")
+    {
         m_console->setString("Hello");
         m_console->setString(std::to_string(operand.size()));
+    }
+    auto* object = m_factory->Create(operand[0]->getInformation(), operand);
+    if (object == nullptr)
+    {
+        m_console->setString("InvalidCommand", Color::Blue, Color::Black);
+        return;
+    }
+    object->Execute(m_console, library);
+    
+}
+
+void OperandInterpreter::IComandFactory::registertype(std::string str, ICommand* command)
+{
+    if (m_factory.contains(str))
+        throw std::runtime_error("Key is already registered");
+    m_factory.insert({ str, command });
+}
+
+ICommand* OperandInterpreter::IComandFactory::Create(std::string str, std::vector<StringOperand*> operand)
+{
+    if (auto it = m_factory.find(str); it == m_factory.end())
+        return nullptr;
+    else
+    {
+        operand = removeFirstOperandIfNotEmpty(operand);
+        return it->second->Clone(operand);
+    }
 }

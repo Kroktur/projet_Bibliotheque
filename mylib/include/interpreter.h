@@ -3,7 +3,8 @@
 #include "Consoleframebuffer.h"
 #include "MediathequeV2.h"
 #include <vector>
-
+#include <map>
+#include "Command.h"
 class stringInterpreterAndConverter
 {
 public:
@@ -17,9 +18,15 @@ private:
 class OperandInterpreter
 {
 public:
-	OperandInterpreter(ConsoleFramebuffer* console,MediaLibrary* lybrary );
-	void interpret(std::vector<StringOperand*> operand);
+	OperandInterpreter(ConsoleFramebuffer* console);
+	void interpret(std::vector<StringOperand*> operand, MediaLibrary* library);
 private:
+	struct IComandFactory
+	{
+		void registertype(std::string str, ICommand* command);
+		ICommand* Create(std::string str, std::vector<StringOperand*> operand);
+		std::map<std::string, ICommand*> m_factory;
+	};
 	ConsoleFramebuffer* m_console;
-	MediaLibrary* m_Lybrary;
+	IComandFactory* m_factory;
 };

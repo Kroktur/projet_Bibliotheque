@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "Consoleframebuffer.h"
 enum Entity_Type
 {
 	Media_Type
@@ -21,6 +22,7 @@ public:
 	Entity(Entity_Type type);
 	virtual ~Entity() = default;
 	virtual Entity_Type getType() const= 0;
+	virtual void Render(ConsoleFramebuffer* consol) = 0;
 protected:
 	Entity_Type m_Type;
 };
@@ -34,6 +36,7 @@ public:
 	virtual std::string getAge() const = 0;
 	virtual std::string getEmailAddress() const = 0;
 	virtual std::string getPhoneNumber() const = 0;
+	virtual void Render(ConsoleFramebuffer* consol) = 0;
 protected:
 	std::string m_Name;
 	std::string m_FirstName;
@@ -52,6 +55,7 @@ public:
 	std::string getAge() const override;
 	std::string getEmailAddress() const override;
 	std::string getPhoneNumber() const override;
+	virtual void Render(ConsoleFramebuffer* consol);
 	bool operator ==(Client& client);
 private:
 	std::vector<IMedia*> m_RentMedia;
@@ -65,6 +69,7 @@ public:
 	virtual std::string getTitle() const = 0;
 	virtual Media_Status getMediaStatus() const = 0;
 	virtual void changeStatus(Media_Status newstatus) = 0;
+	virtual void Render(ConsoleFramebuffer* consol) = 0;
 protected:
 	std::string m_Title;
 	Media_Status m_Status;
@@ -76,6 +81,7 @@ public:
 	std::string getTitle() const override;
 	Media_Status getMediaStatus() const override;
 	void changeStatus(Media_Status newstatus) override;
+	virtual void Render(ConsoleFramebuffer* consol);
 	std::string getISBN() const;
 	bool operator ==(Book& book);
 private:	
@@ -88,6 +94,7 @@ public:
 	std::string getTitle() const override;
 	Media_Status getMediaStatus() const override;
 	void changeStatus(Media_Status newstatus) override;
+	virtual void Render(ConsoleFramebuffer* consol);
 	std::string getSupport() const ;
 	std::string getAgeRestriction() const ;
 	bool operator ==(Film& film);
@@ -102,6 +109,7 @@ public:
 	std::string getTitle() const override;
 	Media_Status getMediaStatus() const override;
 	void changeStatus(Media_Status newstatus) override;
+	virtual void Render(ConsoleFramebuffer* consol);
 	std::string getStudio();
 	std::string getPegi();
 	std::string getGender();

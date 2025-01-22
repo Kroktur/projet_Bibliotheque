@@ -104,6 +104,18 @@ std::vector<Entity*> MediaLibrary::getFullEntitylist()
 	return m_Entity;
 }
 
+void MediaLibrary::ShowEntity(std::vector<Entity*> list, ConsoleFramebuffer* consol)
+{
+	for (auto& idx : list)
+		ShowEntity(idx, consol);
+}
+
+
+void MediaLibrary::ShowEntity(Entity* entity, ConsoleFramebuffer* consol)
+{
+	entity->Render(consol);
+}
+
 bool MediaLibrary::EntityBind(Entity* firstEntity, Entity* secondEntity, Entity_Type type)
 {	
 	if (type == Client_Type)

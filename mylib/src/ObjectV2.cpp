@@ -48,6 +48,26 @@ std::string Client::getPhoneNumber() const
 {
 	return m_PhoneNumber;
 }
+void Client::Render(ConsoleFramebuffer* consol)
+{
+	//type
+	consol->setString("---Client---",Color::White,Color::Black);
+	//name
+	consol->setString("---Name---", Color::Blue);
+	consol->setString(m_Name);
+	//firstName
+	consol->setString("---FirstName---", Color::Blue);
+	consol->setString(m_FirstName);
+	//age
+	consol->setString("---Age---");
+	consol->setString(m_Age);
+	//address
+	consol->setString("---EmailAddress---", Color::Blue);
+	consol->setString(m_EmailAddress);
+	//phoneNumber
+	consol->setString("---PhoneNumber---", Color::Blue);
+	consol->setString(m_PhoneNumber);
+}
 bool Client::operator==(Client& client)
 {
 	if (m_Name != client.getName())
@@ -95,6 +115,24 @@ void Book::changeStatus(Media_Status newstatus)
 	m_Status = newstatus;
 }
 
+void Book::Render(ConsoleFramebuffer* consol)
+{
+	//type
+	consol->setString("---Book---", Color::White, Color::Black);
+	//Title
+	consol->setString("---Title---", Color::Blue);
+	consol->setString(m_Title);
+	//ISBN
+	consol->setString("---ISBN---", Color::Blue);
+	consol->setString(m_ISBN);
+	//status
+	consol->setString("---Status---", Color::Blue);
+	if(m_Status == Available_Status)
+		consol->setString("Available",Color::Green);
+	if (m_Status == Borrowed_Status)
+		consol->setString("Borrowed", Color::Red);
+}
+
 std::string Book::getISBN() const
 {
 	return m_ISBN;
@@ -127,6 +165,27 @@ Media_Status Film::getMediaStatus() const
 void Film::changeStatus(Media_Status newstatus)
 {
 	m_Status = newstatus;
+}
+
+void Film::Render(ConsoleFramebuffer* consol)
+{
+	//type
+	consol->setString("---Book---", Color::White, Color::Black);
+	//Title
+	consol->setString("---Title---",Color::Blue);
+	consol->setString(m_Title);
+	//Support
+	consol->setString("---Support---", Color::Blue);
+	consol->setString(m_Support);
+	//Agerestriction
+	consol->setString("---AgeRestriction---", Color::Blue);
+	consol->setString(m_AgeRestriction);
+	//status
+	consol->setString("---Status---", Color::Blue);
+	if (m_Status == Available_Status)
+		consol->setString("Available", Color::Green);
+	if (m_Status == Borrowed_Status)
+		consol->setString("Borrowed", Color::Red);
 }
 
 std::string Film::getSupport() const
@@ -170,6 +229,30 @@ Media_Status VideoGame::getMediaStatus() const
 void VideoGame::changeStatus(Media_Status newstatus)
 {
 	m_Status = newstatus;
+}
+
+void VideoGame::Render(ConsoleFramebuffer* consol)
+{
+	//type
+	consol->setString("---Book---", Color::White, Color::Black);
+	//Title
+	consol->setString("---Title---",Color::Blue);
+	consol->setString(m_Title);
+	//Studio
+	consol->setString("---Studio---", Color::Blue);
+	consol->setString(m_Studio);
+	//Pegi
+	consol->setString("---Pegi---", Color::Blue);
+	consol->setString(m_Pegi);
+	//Gender
+	consol->setString("---Gender---", Color::Blue);
+	consol->setString(m_Gender);
+	//status
+	consol->setString("---Status---", Color::Blue);
+	if (m_Status == Available_Status)
+		consol->setString("Available", Color::Green);
+	if (m_Status == Borrowed_Status)
+		consol->setString("Borrowed", Color::Red);
 }
 
 std::string VideoGame::getStudio()

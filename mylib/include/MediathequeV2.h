@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Consoleframebuffer.h"
 #include "ObjectV2.h"
 #include <vector>
 
@@ -21,7 +21,10 @@ public:
 	std::vector<Entity*> FilterList(std::vector<Entity*> list1, std::vector<Entity*> list2);
 	//full list
 	std::vector<Entity*> getFullEntitylist();
+	//show
+	void ShowEntity(std::vector<Entity*> list,ConsoleFramebuffer* consol);
 private:
+	void ShowEntity(Entity* entity, ConsoleFramebuffer* consol);
 	bool EntityBind(Entity* firstEntity, Entity* secondEntity, Entity_Type type);
 	std::vector<Entity*> m_Entity;
 };
