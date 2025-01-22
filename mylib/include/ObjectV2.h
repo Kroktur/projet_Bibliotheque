@@ -77,6 +77,7 @@ public:
 	Media_Status getMediaStatus() const override;
 	void changeStatus(Media_Status newstatus) override;
 	std::string getISBN() const;
+	bool operator ==(Book& book);
 private:	
 	std::string m_ISBN;
 };
@@ -89,6 +90,7 @@ public:
 	void changeStatus(Media_Status newstatus) override;
 	std::string getSupport() const ;
 	std::string getAgeRestriction() const ;
+	bool operator ==(Film& film);
 private:
 	std::string m_Support;
 	std::string m_AgeRestriction;
@@ -103,6 +105,7 @@ public:
 	std::string getStudio();
 	std::string getPegi();
 	std::string getGender();
+	bool operator ==(VideoGame& VideoGame);
 private:
 	std::string m_Studio;
 	std::string m_Pegi;

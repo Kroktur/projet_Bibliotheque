@@ -1,6 +1,6 @@
 #include "research.h"
 
-Database::Database():m_console(new ConsoleFramebuffer), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console))
+Database::Database():m_console(new ConsoleFramebuffer), m_Library(new MediaLibrary), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console, m_Library))
 {
 }
 
@@ -8,9 +8,12 @@ Database::~Database()
 {
 	delete m_console;
 	m_console = nullptr;
-
+	delete m_Library;
+	m_Library = nullptr;
 	delete m_StringManager;
 	m_StringManager = nullptr;
+	delete m_Interpret;
+	m_Interpret = nullptr;
 }
 
 void Database::Exe()

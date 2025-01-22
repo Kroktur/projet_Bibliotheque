@@ -1,5 +1,6 @@
 #include "Consoleframebuffer.h"
 #include "interpreter.h"
+#include "MediathequeV2.h"
 class Database
 {
 public:
@@ -14,4 +15,5 @@ private:
 	stringInterpreterAndConverter* m_StringManager;
 	OperandInterpreter* m_Interpret;
 	std::string m_lastCommand;
+	MediaLibrary* m_Library;
 };

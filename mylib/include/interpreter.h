@@ -1,7 +1,9 @@
 #pragma once
 #include "Operand.h"
 #include "Consoleframebuffer.h"
+#include "MediathequeV2.h"
 #include <vector>
+
 class stringInterpreterAndConverter
 {
 public:
@@ -15,8 +17,9 @@ private:
 class OperandInterpreter
 {
 public:
-	OperandInterpreter(ConsoleFramebuffer* console);
+	OperandInterpreter(ConsoleFramebuffer* console,MediaLibrary* lybrary );
 	void interpret(std::vector<StringOperand*> operand);
 private:
 	ConsoleFramebuffer* m_console;
+	MediaLibrary* m_Lybrary;
 };

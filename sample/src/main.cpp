@@ -11,10 +11,12 @@ int main()
 	Client* Arthur = new Client{ "Arthur", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
 	Client* Arthur2 = new Client{ "Arthur", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
 	Client* Arthur3 = new Client{ "Zebre", "Blanchet","18","Arthur.blanchet.16@gmail.com","0643506540" };
+	Book* livre = new Book{ "lelivredelajungle","112324" };
 	mlb.addEntity(Arthur);
 	mlb.addEntity(Arthur2);
 	mlb.addEntity(Arthur3);
-	std::cout << mlb.EntityBind(Arthur, Arthur2);
+	mlb.addEntity(livre);
+	std::cout << mlb.EntityBind(Arthur, livre);
 
 	/*Client* client = new Client("aea", "dzqd",53534,"dzq","dqsd");
 	Media* media = new Book("sqetset","dqsdqd");

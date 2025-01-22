@@ -47,7 +47,7 @@ bool stringInterpreterAndConverter::isEmpty(std::string str)
 	return true;
 }
 
-OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console):m_console(console)
+OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console,MediaLibrary* lybrary):m_console(console),m_Lybrary(lybrary)
 {
 }
 

@@ -100,6 +100,15 @@ std::string Book::getISBN() const
 	return m_ISBN;
 }
 
+bool Book::operator==(Book& book)
+{
+	if (m_Title != book.getTitle())
+		return false;
+	if (m_ISBN != book.getISBN())
+		return false;
+	return true;
+}
+
 Film::Film(std::string Title, std::string support, std::string agerestriction):
 	m_Support(support)
 	,m_AgeRestriction(agerestriction)
@@ -128,6 +137,17 @@ std::string Film::getSupport() const
 std::string Film::getAgeRestriction() const
 {
 	return m_AgeRestriction;
+}
+
+bool Film::operator==(Film& film)
+{
+	if (m_Title != film.getTitle())
+		return false;
+	if (m_AgeRestriction != film.getAgeRestriction())
+		return false;
+	if (m_Support != film.getSupport())
+		return false;
+	return true;
 }
 
 VideoGame::VideoGame(std::string Title, std::string studio, std::string pegi, std::string gender):
@@ -165,4 +185,17 @@ std::string VideoGame::getPegi()
 std::string VideoGame::getGender()
 {
 	return m_Gender;
+}
+
+bool VideoGame::operator==(VideoGame& VideoGame)
+{
+	if (m_Title != VideoGame.getTitle())
+		return false;
+	if (m_Studio != VideoGame.getStudio())
+		return false;
+	if (m_Pegi != VideoGame.getPegi())
+		return false;
+	if (m_Gender != VideoGame.getGender())
+		return false;
+	return true;
 }
