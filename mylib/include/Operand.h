@@ -10,7 +10,7 @@ class IOperand
 {
 public:
 	virtual ~IOperand() = default;
-	virtual  Operandtype gettype() = 0;
+	virtual  Operandtype getType() = 0;
 	
 };
 
@@ -19,8 +19,8 @@ class StringOperand : public IOperand
 public:
 	StringOperand(std::string information);
 	//heritage
-	Operandtype gettype() override;
-	std::string getnformation();
+	Operandtype getType() override;
+	std::string getInformation();
 	bool isInt();
 private:
 	Operandtype m_type;
