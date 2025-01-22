@@ -41,6 +41,7 @@ protected:
 	std::string m_EmailAddress;
 	std::string m_PhoneNumber;
 };
+class IMedia;
 class Client : public IIndividuals
 {
 public:

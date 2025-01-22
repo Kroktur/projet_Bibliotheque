@@ -1,10 +1,10 @@
 #include "research.h"
 
-research::research():m_console(new ConsoleFramebuffer), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console))
+Database::Database():m_console(new ConsoleFramebuffer), m_StringManager(new stringInterpreterAndConverter), m_Interpret(new OperandInterpreter(m_console))
 {
 }
 
-research::~research()
+Database::~Database()
 {
 	delete m_console;
 	m_console = nullptr;
@@ -13,7 +13,7 @@ research::~research()
 	m_StringManager = nullptr;
 }
 
-void research::Exe()
+void Database::Exe()
 {
 	while (true)
 	{
@@ -24,14 +24,14 @@ void research::Exe()
 	}
 }
 
-void research::addstring(std::string str)
+void Database::addstring(std::string str)
 {
 	if (!isNewCommand(str))
 		return;
 	m_Interpret->interpret(m_StringManager->RemoveEmptySpace(m_StringManager->CreateStringOperand(str)));
 }
 
-bool research::isNewCommand(std::string str)
+bool Database::isNewCommand(std::string str)
 {
 	if (m_lastCommand == str || m_StringManager->isEmpty(str))
 		return false;

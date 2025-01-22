@@ -1,10 +1,10 @@
 #include "Consoleframebuffer.h"
 #include "interpreter.h"
-class research
+class Database
 {
 public:
-	research();
-	~research();
+	Database();
+	~Database();
 	void Exe();
 private:
 	void addstring(std::string str);

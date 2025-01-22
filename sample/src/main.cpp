@@ -3,8 +3,8 @@
 #include "research.h"
 int main()
 {
-	research reh;
-	reh.Exe();
+	Database data;
+	data.Exe();
 	
 
 	/*Client* client = new Client("aea", "dzqd",53534,"dzq","dqsd");
