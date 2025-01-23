@@ -30,8 +30,9 @@ AddCommand::~AddCommand()
 	m_factory = nullptr;
 }
 
-ICommand* AddCommand::specialClone(std::vector<StringOperand*> operand)
+ICommand* AddCommand::specialClone(std::vector<StringOperand*> operand, AddCommand* comand)
 {
+	delete comand;
 	return m_factory->Create(operand[0]->getInformation(), operand);
 }
 
@@ -39,7 +40,7 @@ ICommand* AddCommand::Clone(std::vector<StringOperand*> operand)
 {
 	AddCommand* mycommand = new AddCommand{ operand };
 
-	return mycommand->specialClone(operand);
+	return mycommand->specialClone(operand, mycommand);
 }
 
 void AddCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
@@ -711,4 +712,23 @@ void clearCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	console->clear();
 	console->setString("---Clear Succes---", Color::Green, Color::Black);
 	console->setString("-------New Consol-------", Color::Blue, Color::Black);
+}
+
+ExitCommand::ExitCommand()
+{
+}
+
+ExitCommand::ExitCommand(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+
+ICommand* ExitCommand::Clone(std::vector<StringOperand*> operand)
+{
+	return new ExitCommand(operand);
+}
+
+void ExitCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	console->setString("Close Consol", Color::Red, Color::Black);
+	console->CloseWindow();
 }

@@ -21,7 +21,7 @@ public:
 	AddCommand(std::vector<StringOperand*> operand);
 
 	~AddCommand();
-	ICommand* specialClone(std::vector<StringOperand*> operand);
+	ICommand* specialClone(std::vector<StringOperand*> operand, AddCommand* comand);
 	ICommand* Clone(std::vector<StringOperand*> operand) override;
 	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
 private:
@@ -228,6 +228,18 @@ class clearCommand : public ICommand
 public:
 	clearCommand();
 	clearCommand(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+
+
+	std::vector<StringOperand*> m_operand;
+};
+class ExitCommand : public ICommand
+{
+public:
+	ExitCommand();
+	ExitCommand(std::vector<StringOperand*> operand);
 	ICommand* Clone(std::vector<StringOperand*> operand) override;
 	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
 private:

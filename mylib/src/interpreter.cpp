@@ -56,6 +56,13 @@ OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console):m_console(co
     m_factory->registertype("Return", new ReturnMedia);
     m_factory->registertype("Remove", new RemoveCommand); 
         m_factory->registertype("Clear", new clearCommand);
+        m_factory->registertype("Exit", new ExitCommand);
+}
+
+OperandInterpreter::~OperandInterpreter()
+{
+    delete m_factory;
+    m_factory = nullptr;
 }
 
 void OperandInterpreter::interpret(std::vector<StringOperand*> operand,MediaLibrary* library)

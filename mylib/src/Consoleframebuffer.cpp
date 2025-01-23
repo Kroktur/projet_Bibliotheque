@@ -16,6 +16,8 @@ public:
     void writeConsol();
     std::string getLastCommand();
     void clear();
+    bool IsRunning();
+    void CloseWindow();
 private:
     void setCharacter(int row, int col, char car, Color foreground, Color background);
     void copyStringToEnd(std::string string);
@@ -34,6 +36,7 @@ private:
     int m_numRows;
     int m_numCols;
     int m_idx;
+    bool m_IsRunning;
     std::string m_lastCommand;
     std::vector<std::string> m_historique;
     std::vector <std::string> m_toWrite;
@@ -111,6 +114,14 @@ void ConsoleFramebufferPrivateImpl::clear()
  m_colorToWrite.clear();
    m_backColorToWrite.clear();
 }
+bool ConsoleFramebufferPrivateImpl::IsRunning()
+{
+    return m_IsRunning;
+}
+void ConsoleFramebufferPrivateImpl::CloseWindow()
+{
+    m_IsRunning = false;
+}
 void ConsoleFramebufferPrivateImpl::copyStringToEnd(std::string string)
 {
     std::string newstring = string;
@@ -126,7 +137,7 @@ void ConsoleFramebufferPrivateImpl::changeIdxToEnd(std::string& string)
 
 
 
-ConsoleFramebufferPrivateImpl::ConsoleFramebufferPrivateImpl() :m_handleoutput(GetStdHandle(STD_OUTPUT_HANDLE)), m_handleinput(::GetStdHandle(STD_INPUT_HANDLE)),m_idx(0)
+ConsoleFramebufferPrivateImpl::ConsoleFramebufferPrivateImpl() :m_handleoutput(GetStdHandle(STD_OUTPUT_HANDLE)), m_handleinput(::GetStdHandle(STD_INPUT_HANDLE)),m_idx(0), m_IsRunning(true)
 {
     //prepare the first command
     m_historique.reserve(1);
@@ -298,5 +309,15 @@ void ConsoleFramebuffer::clear()
 std::string ConsoleFramebuffer::getLastCommand()
 {
     return m_impl->getLastCommand();
+}
+
+bool ConsoleFramebuffer::IsRunning()
+{
+    return m_impl->IsRunning();
+}
+
+void ConsoleFramebuffer::CloseWindow()
+{
+    m_impl->CloseWindow();
 }
 

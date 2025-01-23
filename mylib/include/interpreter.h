@@ -19,6 +19,7 @@ class OperandInterpreter
 {
 public:
 	OperandInterpreter(ConsoleFramebuffer* console);
+	~OperandInterpreter();
 	void interpret(std::vector<StringOperand*> operand, MediaLibrary* library);
 private:
 	struct IComandFactory

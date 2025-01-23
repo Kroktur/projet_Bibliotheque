@@ -18,7 +18,7 @@ Database::~Database()
 
 void Database::Exe()
 {
-	while (true)
+	while (m_console->IsRunning())
 	{
 		m_console->writeConsol();
 		m_console->updateSize();

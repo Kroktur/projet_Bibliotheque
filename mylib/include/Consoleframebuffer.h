@@ -25,6 +25,8 @@ public:
     void writeConsol();
     void clear();
     std::string getLastCommand();
+    bool IsRunning();
+    void CloseWindow();
 private:
     ConsoleFramebufferPrivateImpl* m_impl;
 };

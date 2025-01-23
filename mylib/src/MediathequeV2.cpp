@@ -18,6 +18,7 @@ void MediaLibrary::removeEntity(Entity* entityToDelete)
 		if (found)
 		{
 			delete* it;
+			*it = nullptr;
 			it = m_Entity.erase(it);
 		}
 		else
