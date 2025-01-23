@@ -23,6 +23,7 @@ public:
     void show();
     void updateSize();
     void writeConsol();
+    void clear();
     std::string getLastCommand();
 private:
     ConsoleFramebufferPrivateImpl* m_impl;

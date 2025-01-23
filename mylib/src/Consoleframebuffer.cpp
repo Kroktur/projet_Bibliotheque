@@ -15,6 +15,7 @@ public:
     void updateSze();
     void writeConsol();
     std::string getLastCommand();
+    void clear();
 private:
     void setCharacter(int row, int col, char car, Color foreground, Color background);
     void copyStringToEnd(std::string string);
@@ -104,6 +105,12 @@ std::string ConsoleFramebufferPrivateImpl::getLastCommand()
 {
     return m_lastCommand;
 }
+void ConsoleFramebufferPrivateImpl::clear()
+{
+   m_toWrite.clear();
+ m_colorToWrite.clear();
+   m_backColorToWrite.clear();
+}
 void ConsoleFramebufferPrivateImpl::copyStringToEnd(std::string string)
 {
     std::string newstring = string;
@@ -125,6 +132,7 @@ ConsoleFramebufferPrivateImpl::ConsoleFramebufferPrivateImpl() :m_handleoutput(G
     m_historique.reserve(1);
     m_historique.resize(1);
     updateSze();
+   setString("-------New Consol-------", Color::Blue, Color::Black);
 }
 
 
@@ -280,6 +288,11 @@ void ConsoleFramebuffer::updateSize()
 void ConsoleFramebuffer::writeConsol()
 {
     m_impl->writeConsol();
+}
+
+void ConsoleFramebuffer::clear()
+{
+    m_impl->clear();
 }
 
 std::string ConsoleFramebuffer::getLastCommand()

@@ -637,3 +637,78 @@ void ShowRentClient::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	console->setString("Show Client Rent ", Color::Green, Color::Black);
 	library->ShowEntity(static_cast<Client*>(clientlist[0])->getMedia(), console);
 }
+
+RemoveCommand::RemoveCommand()
+{
+}
+
+RemoveCommand::RemoveCommand(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+
+ICommand* RemoveCommand::Clone(std::vector<StringOperand*> operand)
+{
+	return new RemoveCommand(operand);
+}
+
+void RemoveCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	std::vector<Entity*> list;
+	if (m_operand.size() < 2)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		return;
+	}
+	if (m_operand.size() % 2 != 0)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
+		return;
+	}
+	if (m_operand.size() >= 2)
+	{
+		list = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
+	}
+	if (m_operand.size() > 2)
+	{
+		for (auto i = 2; i < m_operand.size(); i += 2)
+		{
+			list = library->FilterList(list, library->Search(library->getFullEntitylist(), interpret(m_operand[i]), m_operand[i + 1]->getInformation()));
+		}
+	}
+
+
+
+	if (list.empty())
+	{
+		console->setString("Not Found Imposible to remove", Color::Red, Color::Black);
+		return;
+	}
+
+	console->setString("Remove Done", Color::Green, Color::Black);
+	library->removeEntity(list);
+}
+
+clearCommand::clearCommand()
+{
+}
+
+clearCommand::clearCommand(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+
+ICommand* clearCommand::Clone(std::vector<StringOperand*> operand)
+{
+	return new clearCommand(operand);
+}
+
+void clearCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	if (m_operand.size() !=1 )
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		return;
+	}
+	console->clear();
+	console->setString("---Clear Succes---", Color::Green, Color::Black);
+	console->setString("-------New Consol-------", Color::Blue, Color::Black);
+}

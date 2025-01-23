@@ -210,3 +210,28 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };
+class RemoveCommand : public ICommand
+{
+public:
+	RemoveCommand();
+	RemoveCommand(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+
+
+	std::vector<StringOperand*> m_operand;
+
+};
+class clearCommand : public ICommand
+{
+public:
+	clearCommand();
+	clearCommand(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+
+
+	std::vector<StringOperand*> m_operand;
+};

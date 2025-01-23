@@ -54,6 +54,8 @@ OperandInterpreter::OperandInterpreter(ConsoleFramebuffer* console):m_console(co
     m_factory->registertype("Search", new ReSearch);
     m_factory->registertype("Rent", new RentMedia);
     m_factory->registertype("Return", new ReturnMedia);
+    m_factory->registertype("Remove", new RemoveCommand); 
+        m_factory->registertype("Clear", new clearCommand);
 }
 
 void OperandInterpreter::interpret(std::vector<StringOperand*> operand,MediaLibrary* library)

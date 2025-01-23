@@ -13,7 +13,6 @@ void MediaLibrary::removeEntity(Entity* entityToDelete)
 		if (EntityBind(*it, entityToDelete))
 		{
 				found = true;
-				break;
 		}
 		
 		if (found)
