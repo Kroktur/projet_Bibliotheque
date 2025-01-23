@@ -30,9 +30,8 @@ AddCommand::~AddCommand()
 	m_factory = nullptr;
 }
 
-ICommand* AddCommand::specialClone(std::vector<StringOperand*> operand, AddCommand* comand)
+ICommand* AddCommand::specialClone(std::vector<StringOperand*> operand)
 {
-	delete comand;
 	return m_factory->Create(operand[0]->getInformation(), operand);
 }
 
@@ -40,7 +39,7 @@ ICommand* AddCommand::Clone(std::vector<StringOperand*> operand)
 {
 	AddCommand* mycommand = new AddCommand{ operand };
 
-	return mycommand->specialClone(operand, mycommand);
+	return mycommand->specialClone(operand);
 }
 
 void AddCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)

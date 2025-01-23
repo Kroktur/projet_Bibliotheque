@@ -21,7 +21,7 @@ public:
 	AddCommand(std::vector<StringOperand*> operand);
 
 	~AddCommand();
-	ICommand* specialClone(std::vector<StringOperand*> operand, AddCommand* comand);
+	ICommand* specialClone(std::vector<StringOperand*> operand);
 	ICommand* Clone(std::vector<StringOperand*> operand) override;
 	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
 private:
