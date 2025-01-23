@@ -73,10 +73,13 @@ public:
 	std::string getAge() const override;
 	std::string getEmailAddress() const override;
 	std::string getPhoneNumber() const override;
+	void rentMedia(std::vector<Entity*> list);
+	std::vector<Entity*> getMedia();
+	void removeMedia(Entity* entity);
 	virtual void Render(ConsoleFramebuffer* consol);
 	bool operator ==(Client& client);
 private:
-	std::vector<IMedia*> m_RentMedia;
+	std::vector<Entity*> m_RentMedia;
 };
 class IMedia : public Entity
 {

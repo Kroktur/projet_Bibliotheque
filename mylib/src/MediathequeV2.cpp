@@ -248,6 +248,24 @@ std::vector<Entity*> MediaLibrary::Search(std::vector<Entity*> list, search Sear
 	return result;
 }
 
+void MediaLibrary::rentMedia(Client* client, std::vector<Entity*> list)
+{
+	client->rentMedia(list);
+}
+
+void MediaLibrary::returnMedia(Client* client, std::vector<Entity*> list)
+{
+	std::vector<Entity*> clientlist = client->getMedia();
+	for (auto& clientidx : clientlist)
+	{
+		for (auto& idx : list)
+		{
+			if (EntityBind(clientidx, idx))
+				client->removeMedia(clientidx);
+		}
+	}
+}
+
 
 void MediaLibrary::ShowEntity(Entity* entity, ConsoleFramebuffer* consol)
 {

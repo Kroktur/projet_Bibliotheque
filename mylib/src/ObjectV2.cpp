@@ -48,6 +48,55 @@ std::string Client::getPhoneNumber() const
 {
 	return m_PhoneNumber;
 }
+void Client::rentMedia(std::vector<Entity*> list)
+{
+	for (auto& idx : list)
+	{
+		if (idx->getType() == Client_Type)
+			continue;
+		if (idx->getType() == Book_Type)
+		{
+			static_cast<Book*>(idx)->changeStatus(Borrowed_Status);
+			m_RentMedia.push_back(idx);
+		}
+		if (idx->getType() == Film_Type)
+		{
+			if (m_Age >= static_cast<Film*>(idx)->getAgeRestriction())
+			{
+				static_cast<Film*>(idx)->changeStatus(Borrowed_Status);
+				m_RentMedia.push_back(idx);
+			}
+		}
+		if (idx->getType() == VideGame_Type)
+		{
+			if (m_Age >= static_cast<VideoGame*>(idx)->getPegi())
+			{
+				static_cast<VideoGame*>(idx)->changeStatus(Borrowed_Status);
+				m_RentMedia.push_back(idx);
+			}
+		}
+	}
+}
+std::vector<Entity*> Client::getMedia()
+{
+	return m_RentMedia;
+}
+void Client::removeMedia(Entity* entity)
+{
+	for (auto it = m_RentMedia.begin(); it != m_RentMedia.end();)
+	{
+		if (*it == entity)
+		{
+			static_cast<IMedia*>(entity)->changeStatus(Borrowed_Status);
+			it = m_RentMedia.erase(it);
+			break;
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
 void Client::Render(ConsoleFramebuffer* consol)
 {
 	//type

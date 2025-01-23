@@ -27,6 +27,10 @@ public:
 	~MediaLibrary();
 	//
 	std::vector<Entity*> Search(std::vector<Entity*> list, search Search, std::string reSearch);
+	// rent media
+	void rentMedia(Client* client, std::vector<Entity*> list);
+	// return media 
+	void returnMedia(Client* client, std::vector<Entity*> list);
 private:
 	void ShowEntity(Entity* entity, ConsoleFramebuffer* consol);
 	bool EntityBind(Entity* firstEntity, Entity* secondEntity, Entity_Type type);
