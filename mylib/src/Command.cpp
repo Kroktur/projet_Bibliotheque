@@ -409,6 +409,11 @@ void ReSearch::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 		console->setString("Invalid Operand Size", Color::Red, Color::White);
 		return;
 	}
+	if (m_operand.size() % 2 == 0)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
+		return;
+	}
 	if (m_operand.size() >= 2)
 	{
 		list = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
@@ -533,10 +538,14 @@ void ReturnMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 {
 	if (m_operand.size() < 4)
 	{
-		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
 		return;
 	}
-
+	if (m_operand.size() % 2 == 0)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
+		return;
+	}
 	std::vector<Entity*> list;
 	std::vector<Entity*> clientlist;
 	clientlist = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());

@@ -87,7 +87,7 @@ void Client::removeMedia(Entity* entity)
 	{
 		if (*it == entity)
 		{
-			static_cast<IMedia*>(entity)->changeStatus(Borrowed_Status);
+			static_cast<IMedia*>(entity)->changeStatus(Available_Status);
 			it = m_RentMedia.erase(it);
 			break;
 		}
