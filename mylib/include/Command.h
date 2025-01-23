@@ -163,6 +163,17 @@ private:
 	std::vector<StringOperand*> m_operand;
 
 };
+class ShowRentClient : public ShowCommand
+{
+public:
+	ShowRentClient();
+	ShowRentClient(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
 class ReSearch : public ICommand
 {
 public:

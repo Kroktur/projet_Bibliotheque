@@ -70,6 +70,8 @@ void OperandInterpreter::interpret(std::vector<StringOperand*> operand,MediaLibr
         return;
     }
     object->Execute(m_console, library);
+    delete object;
+    object = nullptr;
     
 }
 

@@ -212,6 +212,7 @@ ShowCommand::ShowCommand(std::vector<StringOperand*> operand) :m_operand(operand
 	m_factory->registertype("Film", new ShowFilm);
 	m_factory->registertype("VideoGame", new ShowVideoGame);
 	m_factory->registertype("Media", new ShowMedia);
+	m_factory->registertype("Rent", new ShowRentClient); 
 }
 
 ShowCommand::~ShowCommand()
@@ -409,7 +410,7 @@ void ReSearch::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 		console->setString("Invalid Operand Size", Color::Red, Color::White);
 		return;
 	}
-	if (m_operand.size() % 2 == 0)
+	if (m_operand.size() % 2 != 0)
 	{
 		console->setString("Invalid Operand Size", Color::Red, Color::Black);
 		return;
@@ -492,12 +493,12 @@ void RentMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	std::vector<Entity*> list;
 	std::vector<Entity*> clientlist;
 	clientlist = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
-	if (clientlist.size() != 1)
+	
+	if (m_operand.size() % 2 != 0)
 	{
-		console->setString("Too Much Client Found", Color::Red, Color::White);
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
 		return;
 	}
-
 	
 	if (m_operand.size() >= 4)
 	{
@@ -509,6 +510,11 @@ void RentMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 		{
 			list = library->FilterList(list, library->Search(library->getFullEntitylist(), interpret(m_operand[i]), m_operand[i + 1]->getInformation()));
 		}
+	}
+	if (clientlist.size() != 1)
+	{
+		console->setString("Too Much Client Found", Color::Red, Color::White);
+		return;
 	}
 	if (list.empty())
 	{
@@ -541,7 +547,7 @@ void ReturnMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 		console->setString("Invalid Operand Size", Color::Red, Color::Black);
 		return;
 	}
-	if (m_operand.size() % 2 == 0)
+	if (m_operand.size() % 2 != 0)
 	{
 		console->setString("Invalid Operand Size", Color::Red, Color::Black);
 		return;
@@ -549,11 +555,7 @@ void ReturnMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	std::vector<Entity*> list;
 	std::vector<Entity*> clientlist;
 	clientlist = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
-	if (clientlist.size() != 1)
-	{
-		console->setString("Too Much Client Found", Color::Red, Color::White);
-		return;
-	}
+	
 
 
 	if (m_operand.size() >= 4)
@@ -567,6 +569,11 @@ void ReturnMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 			list = library->FilterList(list, library->Search(library->getFullEntitylist(), interpret(m_operand[i]), m_operand[i + 1]->getInformation()));
 		}
 	}
+	if (clientlist.size() != 1)
+	{
+		console->setString("Too Much Client Found", Color::Red, Color::White);
+		return;
+	}
 	if (list.empty())
 	{
 		console->setString("Medi Not Found", Color::Red, Color::Black);
@@ -575,5 +582,58 @@ void ReturnMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 
 	console->setString("ReturnMedia", Color::Green, Color::Black);
 	library->returnMedia(static_cast<Client*>(clientlist[0]), list);
+	library->ShowEntity(static_cast<Client*>(clientlist[0])->getMedia(), console);
+}
+
+ShowRentClient::ShowRentClient()
+{
+}
+
+ShowRentClient::ShowRentClient(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+
+ICommand* ShowRentClient::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowRentClient{ operand };;
+}
+
+void ShowRentClient::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	if (m_operand.size() < 2)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		return;
+	}
+	std::vector<Entity*> clientlist;
+	clientlist = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
+	
+	if (m_operand.size() % 2 != 0)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::Black);
+		return;
+	}
+	if (m_operand.size() >= 2)
+	{
+		clientlist = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
+	}
+	if (m_operand.size() > 2)
+	{
+		for (auto i = 2; i < m_operand.size(); i += 2)
+		{
+			clientlist = library->FilterList(clientlist, library->Search(library->getFullEntitylist(), interpret(m_operand[i]), m_operand[i + 1]->getInformation()));
+		}
+	}
+	if (clientlist.size() != 1)
+	{
+		console->setString("Too Much Client Found", Color::Red, Color::White);
+		return;
+	}
+	if (clientlist.empty())
+	{
+		console->setString(" Client Not Found", Color::Red, Color::Black);
+		return;
+	}
+	console->setString("Show Client Rent ", Color::Green, Color::Black);
 	library->ShowEntity(static_cast<Client*>(clientlist[0])->getMedia(), console);
 }
