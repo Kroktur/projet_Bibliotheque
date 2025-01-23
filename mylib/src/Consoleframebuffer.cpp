@@ -1,5 +1,11 @@
 #include "ConsoleFramebuffer.h"
 #include <Windows.h>
+enum Scroll
+{
+    No_Scrol
+    ,UP_Scroll
+    ,Down_Scroll
+};
 class ConsoleFramebufferPrivateImpl
 {
 public:
@@ -91,6 +97,7 @@ void ConsoleFramebufferPrivateImpl::writeConsol()
                 copyStringToEnd(m_historique[m_idx]);
             m_historique[m_idx].pop_back();
         }
+       
     }
 }
 std::string ConsoleFramebufferPrivateImpl::getLastCommand()
@@ -232,7 +239,9 @@ void ConsoleFramebufferPrivateImpl::eraseEmtpyHistorique()
 void ConsoleFramebufferPrivateImpl::printText()
 {
     int row = 0;
-    for (auto i = m_toWrite.size() - myMin((m_numRows - 1), m_toWrite.size()); i < m_toWrite.size(); ++i)
+    auto startVec = m_toWrite.size() - myMin((m_numRows - 1), m_toWrite.size());
+    auto stop = m_toWrite.size();
+    for (auto i = startVec; i < stop; ++i)
     {
         setString(row, i);
         ++row;

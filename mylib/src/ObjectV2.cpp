@@ -170,7 +170,7 @@ void Film::changeStatus(Media_Status newstatus)
 void Film::Render(ConsoleFramebuffer* consol)
 {
 	//type
-	consol->setString("---Book---", Color::White, Color::Black);
+	consol->setString("---Film---", Color::White, Color::Black);
 	//Title
 	consol->setString("---Title---",Color::Blue);
 	consol->setString(m_Title);
@@ -234,7 +234,7 @@ void VideoGame::changeStatus(Media_Status newstatus)
 void VideoGame::Render(ConsoleFramebuffer* consol)
 {
 	//type
-	consol->setString("---Book---", Color::White, Color::Black);
+	consol->setString("---VideoGame---", Color::White, Color::Black);
 	//Title
 	consol->setString("---Title---",Color::Blue);
 	consol->setString(m_Title);

@@ -110,6 +110,144 @@ void MediaLibrary::ShowEntity(std::vector<Entity*> list, ConsoleFramebuffer* con
 		ShowEntity(idx, consol);
 }
 
+MediaLibrary::~MediaLibrary()
+{
+	for (auto& idx : m_Entity)
+	{
+		delete idx;
+		idx = nullptr;
+	}
+	m_Entity.clear();
+}
+
+std::vector<Entity*> MediaLibrary::Search(std::vector<Entity*> list, search Search, std::string reSearch)
+{
+	std::vector<Entity*> result;
+	if (Search == Name_Search)
+	{
+		list = findType(Client_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Client*>(idx)->getName() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == FirstName_Search)
+	{
+		list = findType(Client_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Client*>(idx)->getFirstName() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Age_Search)
+	{
+		list = findType(Client_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Client*>(idx)->getAge() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == EmailAddress_Search)
+	{
+		list = findType(Client_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Client*>(idx)->getEmailAddress() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == PhoneNumber_Search)
+	{
+		list = findType(Client_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Client*>(idx)->getPhoneNumber() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Title_Search)
+	{
+		list = conbineList(findType(Film_Type, list), conbineList(findType(VideGame_Type, list), findType(Book_Type, list)));
+		for (auto& idx : list)
+		{
+			if (static_cast<IMedia*>(idx)->getTitle() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == ISBN_Search)
+	{
+		list = findType(Book_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Book*>(idx)->getISBN() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Support_Search)
+	{
+		list = findType(Film_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Film*>(idx)->getSupport() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == AgeRestriction_Search)
+	{
+		list = findType(Film_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<Film*>(idx)->getAgeRestriction() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Studio_Search)
+	{
+		list = findType(VideGame_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<VideoGame*>(idx)->getStudio() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Pegi_Search)
+	{
+		list = findType(VideGame_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<VideoGame*>(idx)->getPegi() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Gender_Search)
+	{
+		list = findType(VideGame_Type, list);
+		for (auto& idx : list)
+		{
+			if (static_cast<VideoGame*>(idx)->getGender() == reSearch)
+				result.push_back(idx);
+		}
+	}
+	if (Search == Status_Search)
+	{
+		Media_Status status = Invalid_Status;
+		if (reSearch == "Available")
+			status = Available_Status;
+		if (reSearch == "Borrowed")
+			status = Borrowed_Status;
+		list = conbineList(findType(Film_Type, list), conbineList(findType(VideGame_Type, list), findType(Book_Type, list)));
+		for (auto& idx : list)
+		{
+			if (static_cast<IMedia*>(idx)->getMediaStatus() == status)
+				result.push_back(idx);
+		}
+	}
+	return result;
+}
+
 
 void MediaLibrary::ShowEntity(Entity* entity, ConsoleFramebuffer* consol)
 {

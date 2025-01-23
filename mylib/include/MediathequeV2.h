@@ -23,6 +23,10 @@ public:
 	std::vector<Entity*> getFullEntitylist();
 	//show
 	void ShowEntity(std::vector<Entity*> list,ConsoleFramebuffer* consol);
+	//
+	~MediaLibrary();
+	//
+	std::vector<Entity*> Search(std::vector<Entity*> list, search Search, std::string reSearch);
 private:
 	void ShowEntity(Entity* entity, ConsoleFramebuffer* consol);
 	bool EntityBind(Entity* firstEntity, Entity* secondEntity, Entity_Type type);

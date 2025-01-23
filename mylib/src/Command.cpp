@@ -72,6 +72,12 @@ void AddClient::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 		console->setString("Invalid Type of Operand", Color::Red, Color::Black);
 		return;
 	}
+	if (library->Search(library->getFullEntitylist(), EmailAddress_Search, m_operand[3]->getInformation()).size() != 0
+		|| library->Search(library->getFullEntitylist(), PhoneNumber_Search, m_operand[4]->getInformation()).size() != 0)
+	{
+		console->setString("Email or Phone need to be unique", Color::Red, Color::Black);
+		return;
+	}
 	library->addEntity(new Client{ m_operand[0]->getInformation()
 		,m_operand[1]->getInformation()
 		,m_operand[2]->getInformation()
@@ -98,6 +104,11 @@ void AddBook::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	if (m_operand.size() != 2)
 	{
 		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		return;
+	}
+	if (library->Search(library->getFullEntitylist(), ISBN_Search, m_operand[1]->getInformation()).size() != 0)
+	{
+		console->setString("ISBN need to be unique", Color::Red, Color::Black);
 		return;
 	}
 	library->addEntity(new Book{ m_operand[0]->getInformation()
@@ -196,8 +207,11 @@ ICommand* AddCommand::AddFactory::Create(std::string str, std::vector<StringOper
 ShowCommand::ShowCommand(std::vector<StringOperand*> operand) :m_operand(operand), m_factory(new ShowFactory)
 {
 	m_factory->registertype("All", new ShowAll);
-	
-
+	m_factory->registertype("Client", new ShowClient);
+	m_factory->registertype("Book", new ShowBook);
+	m_factory->registertype("Film", new ShowFilm);
+	m_factory->registertype("VideoGame", new ShowVideoGame);
+	m_factory->registertype("Media", new ShowMedia);
 }
 
 ShowCommand::~ShowCommand()
@@ -266,4 +280,185 @@ void ShowAll::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	console->setString("Show all Entity :", Color::Green, Color::Black);
 
 	library->ShowEntity(library->getFullEntitylist(), console);
+}
+
+ShowClient::ShowClient()
+{
+}
+
+ShowClient::ShowClient(std::vector<StringOperand*> operand) : m_operand(operand)
+{
+}
+
+ICommand* ShowClient::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowClient{ operand };
+}
+
+void ShowClient::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+
+	console->setString("Show Client :", Color::Green, Color::Black);
+
+	library->ShowEntity(library->findType(Client_Type,library->getFullEntitylist()), console);
+}
+ShowBook::ShowBook()
+{
+}
+
+ShowBook::ShowBook(std::vector<StringOperand*> operand) : m_operand(operand)
+{
+}
+
+ICommand* ShowBook::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowBook{ operand };
+}
+
+void ShowBook::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+
+	console->setString("Show Book :", Color::Green, Color::Black);
+
+	library->ShowEntity(library->findType(Book_Type, library->getFullEntitylist()), console);
+}
+ShowFilm::ShowFilm()
+{
+}
+
+ShowFilm::ShowFilm(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+
+
+ICommand* ShowFilm::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowFilm{ operand };
+}
+
+void ShowFilm::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+
+	console->setString("Show Film :", Color::Green, Color::Black);
+
+	library->ShowEntity(library->findType(Film_Type, library->getFullEntitylist()), console);
+}
+ShowVideoGame::ShowVideoGame()
+{
+}
+
+ShowVideoGame::ShowVideoGame(std::vector<StringOperand*> operand) :m_operand(operand)
+{
+}
+
+
+ICommand* ShowVideoGame::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowVideoGame{ operand };
+}
+
+void ShowVideoGame::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+
+	console->setString("Show VideoGame :", Color::Green, Color::Black);
+
+	library->ShowEntity(library->findType(VideGame_Type, library->getFullEntitylist()), console);
+}
+ShowMedia::ShowMedia()
+{
+}
+
+ShowMedia::ShowMedia(std::vector<StringOperand*> operand) :m_operand(operand)
+{
+}
+
+
+ICommand* ShowMedia::Clone(std::vector<StringOperand*> operand)
+{
+	return new ShowMedia{ operand };
+}
+
+void ShowMedia::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+
+	console->setString("Show Media :", Color::Green, Color::Black);
+	auto list1 = library->findType(VideGame_Type, library->getFullEntitylist());
+	auto list2 = library->findType(Film_Type, library->getFullEntitylist());
+	auto list3 = library->findType(Book_Type, library->getFullEntitylist());
+	library->ShowEntity(library->conbineList(library->conbineList(list1, list2), list3), console);
+}
+ReSearch::ReSearch()
+{
+}
+
+ReSearch::ReSearch(std::vector<StringOperand*> operand) :m_operand(operand)
+{
+}
+
+
+ICommand* ReSearch::Clone(std::vector<StringOperand*> operand)
+{
+	return new ReSearch{ operand };
+}
+
+void ReSearch::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	std::vector<Entity*> list;
+	if (m_operand.size() < 2)
+	{
+		console->setString("Invalid Operand Size", Color::Red, Color::White);
+		return;
+	}
+	if (m_operand.size() >= 2)
+	{
+		list = library->Search(library->getFullEntitylist(), interpret(m_operand[0]), m_operand[1]->getInformation());
+	}
+	if (m_operand.size() > 2)
+	{
+		for (auto i = 2; i < m_operand.size(); i += 2)
+		{
+			list = library->FilterList(list, library->Search(library->getFullEntitylist(), interpret(m_operand[i]), m_operand[i + 1]->getInformation()));
+		}
+	}
+	
+
+
+	if (list.empty())
+	{
+		console->setString("Not Found", Color::Red, Color::Black);
+		return;
+	}
+	console->setString("ReaSearch", Color::Green, Color::Black);
+	library->ShowEntity(list, console);
+}
+
+search interpret(StringOperand* operand)
+{
+	if (operand->getInformation() == "Name")
+		return Name_Search;
+	if (operand->getInformation() == "FirstName")
+		return FirstName_Search;
+	if (operand->getInformation() == "Age")
+		return Age_Search;
+	if (operand->getInformation() == "EmailAddress")
+		return EmailAddress_Search;
+	if (operand->getInformation() == "PhoneNumber")
+		return PhoneNumber_Search;
+	if (operand->getInformation() == "Title")
+		return Title_Search;
+	if (operand->getInformation() == "ISBN")
+		return ISBN_Search;
+	if (operand->getInformation() == "Support")
+		return Support_Search;
+	if (operand->getInformation() == "AgeRestriction")
+		return AgeRestriction_Search;
+	if (operand->getInformation() == "Studio")
+		return Studio_Search;
+	if (operand->getInformation() == "Pegi")
+		return Pegi_Search;
+	if (operand->getInformation() == "Gender")
+		return Gender_Search;
+	if (operand->getInformation() == "Status")
+		return Status_Search;
+	return Invalid_Search;
 }

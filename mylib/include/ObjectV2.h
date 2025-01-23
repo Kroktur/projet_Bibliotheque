@@ -2,6 +2,23 @@
 #include <string>
 #include <vector>
 #include "Consoleframebuffer.h"
+enum search
+{
+	Invalid_Search
+	,Name_Search
+	, FirstName_Search
+	,Age_Search
+	,EmailAddress_Search
+	,PhoneNumber_Search
+	,Title_Search
+	,ISBN_Search
+	,Support_Search
+	,AgeRestriction_Search
+	,Studio_Search
+	,Pegi_Search
+	,Gender_Search
+	,Status_Search
+};
 enum Entity_Type
 {
 	Media_Type
@@ -13,7 +30,8 @@ enum Entity_Type
 };
 enum Media_Status
 {
-	Available_Status
+	Invalid_Status
+	,Available_Status
 	,Borrowed_Status
 };
 class Entity

@@ -5,6 +5,7 @@
 
 #include <map>
 std::vector<StringOperand*> removeFirstOperandIfNotEmpty(std::vector<StringOperand*> operand);
+search interpret(StringOperand* operand);
 class ICommand
 {
 public:
@@ -107,3 +108,70 @@ private:
 	std::vector<StringOperand*> m_operand;
 
 };
+class ShowClient : public ShowCommand
+{
+public:
+	ShowClient();
+	ShowClient(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
+class ShowBook : public ShowCommand
+{
+public:
+	ShowBook();
+	ShowBook(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
+class ShowFilm : public ShowCommand
+{
+public:
+	ShowFilm();
+	ShowFilm(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
+class ShowVideoGame : public ShowCommand
+{
+public:
+	ShowVideoGame();
+	ShowVideoGame(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
+class ShowMedia : public ShowCommand
+{
+public:
+	ShowMedia();
+	ShowMedia(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	std::vector<StringOperand*> m_operand;
+
+};
+class ReSearch : public ICommand
+{
+public:
+	ReSearch();
+	ReSearch(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+	
+
+	std::vector<StringOperand*> m_operand;
+};	
