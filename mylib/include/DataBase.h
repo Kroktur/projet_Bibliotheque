@@ -1,3 +1,4 @@
+#pragma once
 #include "Consoleframebuffer.h"
 #include "interpreter.h"
 #include "MediathequeV2.h"

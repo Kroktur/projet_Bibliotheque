@@ -1,5 +1,6 @@
 #include "ConsoleFramebuffer.h"
 #include <Windows.h>
+#include <vector>
 enum Scroll
 {
     No_Scrol
