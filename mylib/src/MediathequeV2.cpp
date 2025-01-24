@@ -7,19 +7,26 @@ void MediaLibrary::addEntity(Entity* newEntity)
 
 void MediaLibrary::removeEntity(Entity* entityToDelete)
 {
+
 	for (auto it = m_Entity.begin(); it != m_Entity.end(); )
 	{
 		bool found = false;
 		if (EntityBind(*it, entityToDelete))
 		{
 				found = true;
+				if (entityToDelete->getType() == Client_Type)
+				{
+					returnMedia(static_cast<Client*>(entityToDelete), getFullEntitylist());
+				}
 		}
 		
 		if (found)
 		{
+			
 			delete* it;
 			*it = nullptr;
 			it = m_Entity.erase(it);
+			return;
 		}
 		else
 			++it;
@@ -256,14 +263,19 @@ void MediaLibrary::rentMedia(Client* client, std::vector<Entity*> list)
 void MediaLibrary::returnMedia(Client* client, std::vector<Entity*> list)
 {
 	std::vector<Entity*> clientlist = client->getMedia();
-	for (auto& clientidx : clientlist)
-	{
+	
 		for (auto& idx : list)
 		{
-			if (EntityBind(clientidx, idx))
-				client->removeMedia(clientidx);
+			for (auto i = 0; i < clientlist.size(); ++i)
+			{
+				if (EntityBind(clientlist[i], idx))
+				{
+					client->removeMedia(clientlist[i]);
+					++i;
+				}
+			}
 		}
-	}
+
 }
 
 

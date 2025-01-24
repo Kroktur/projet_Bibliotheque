@@ -50,9 +50,14 @@ std::string Client::getPhoneNumber() const
 }
 void Client::rentMedia(std::vector<Entity*> list)
 {
+
 	for (auto& idx : list)
 	{
+		if (m_RentMedia.size() >= 5)
+			return;
 		if (idx->getType() == Client_Type)
+			continue;
+		if (static_cast<IMedia*>(idx)->getMediaStatus() == Borrowed_Status)
 			continue;
 		if (idx->getType() == Book_Type)
 		{

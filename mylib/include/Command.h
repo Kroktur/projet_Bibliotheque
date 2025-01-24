@@ -2,10 +2,13 @@
 #include "Consoleframebuffer.h"
 #include "MediathequeV2.h"
 #include "Operand.h"
-
 #include <map>
+
+// Global Founction
 std::vector<StringOperand*> removeFirstOperandIfNotEmpty(std::vector<StringOperand*> operand);
 search interpret(StringOperand* operand);
+
+//Interface
 class ICommand
 {
 public:
@@ -14,6 +17,7 @@ public:
 	virtual ICommand* Clone(std::vector<StringOperand*> operand) = 0;
 	virtual void Execute(ConsoleFramebuffer* console, MediaLibrary* library) = 0;
 };
+//ADD Command
 class AddCommand : public ICommand
 {
 public:
@@ -78,6 +82,7 @@ private:
 	std::vector<StringOperand*> m_operand;
 	
 };
+//ShowCommand
 class ShowCommand : public ICommand
 {
 public:
@@ -174,6 +179,7 @@ private:
 	std::vector<StringOperand*> m_operand;
 
 };
+// ReSearch Command
 class ReSearch : public ICommand
 {
 public:
@@ -186,6 +192,7 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };	
+// Rent Command
 class RentMedia : public ICommand
 {
 public:
@@ -198,6 +205,7 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };
+//Return Command
 class ReturnMedia : public ICommand
 {
 public:
@@ -210,6 +218,7 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };
+//Remove Command
 class RemoveCommand : public ICommand
 {
 public:
@@ -223,6 +232,7 @@ private:
 	std::vector<StringOperand*> m_operand;
 
 };
+//Clear Command
 class clearCommand : public ICommand
 {
 public:
@@ -235,6 +245,7 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };
+//Exit Command
 class ExitCommand : public ICommand
 {
 public:

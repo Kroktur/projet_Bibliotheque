@@ -7,21 +7,51 @@ stringInterpreterAndConverter::~stringInterpreterAndConverter()
 
 std::vector<StringOperand*> stringInterpreterAndConverter::CreateStringOperand(std::string str)
 {
-	std::vector<StringOperand*> myVector;
+    std::vector<StringOperand*> myVector;
     std::string workingStr = str;
 
     while (true)
     {
-        auto index = workingStr.find_first_of(' ');
-        if (index == std::string::npos)
-            break;
+        // Recherche du premier espace ou guillemet
+        auto spaceIndex = workingStr.find_first_of(' ');
+        auto quoteIndex = workingStr.find_first_of('"');
 
-        std::string tmp(&workingStr[0], index);
-        myVector.push_back(new StringOperand(tmp));
-        workingStr = std::string(&workingStr[index + 1], workingStr.size() - (index + 1));
+        // Si on trouve un guillemet avant un espace, on prend la chaîne jusqu'au prochain guillemet
+        if (quoteIndex != std::string::npos && (spaceIndex == std::string::npos || quoteIndex < spaceIndex))
+        {
+            // Trouver la position du guillemet fermant
+            auto closingQuoteIndex = workingStr.find_first_of('"', quoteIndex + 1);
+            if (closingQuoteIndex != std::string::npos)
+            {
+                // Extraire la chaîne entre guillemets
+                std::string tmp = workingStr.substr(quoteIndex + 1, closingQuoteIndex - quoteIndex - 1);
+                myVector.push_back(new StringOperand(tmp));
+                // Mettre à jour workingStr pour continuer après le guillemet fermant
+                workingStr = workingStr.substr(closingQuoteIndex + 1);
+            }
+            else
+            {
+                // Si un guillemet ouvrant est trouvé sans guillemet fermant, on arrête.
+                break;
+            }
+        }
+        else if (spaceIndex != std::string::npos)
+        {
+            // Sinon, si un espace est trouvé, prendre la chaîne avant l'espace
+            std::string tmp = workingStr.substr(0, spaceIndex);
+            myVector.push_back(new StringOperand(tmp));
+            // Mettre à jour workingStr pour continuer après l'espace
+            workingStr = workingStr.substr(spaceIndex + 1);
+        }
+        else
+        {
+            // Si il n'y a plus d'espace ou de guillemet, on ajoute le reste de la chaîne
+            myVector.push_back(new StringOperand(workingStr));
+            break;
+        }
     }
-    myVector.push_back(new StringOperand(workingStr));
-	return myVector;
+
+    return myVector;
 }
 
 std::vector<StringOperand*> stringInterpreterAndConverter::RemoveEmptySpace(std::vector<StringOperand*> operand)
@@ -75,7 +105,8 @@ void OperandInterpreter::interpret(std::vector<StringOperand*> operand,MediaLibr
     auto* object = m_factory->Create(operand[0]->getInformation(), operand);
     if (object == nullptr)
     {
-        m_console->setString("InvalidCommand", Color::Blue, Color::Black);
+        m_console->setString("InvalidCommand : Add ... Show ... Search... Rent... Return ... Remove... Clear Exit", Color::Blue, Color::Black);
+        m_console->setString("Fail", Color::Red, Color::Black);
         return;
     }
     object->Execute(m_console, library);
