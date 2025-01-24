@@ -16,7 +16,7 @@ enum search
 	,AgeRestriction_Search
 	,Studio_Search
 	,Pegi_Search
-	,Gender_Search
+	,Genre_Search
 	,Status_Search
 };
 enum Entity_Type
@@ -133,10 +133,10 @@ public:
 	virtual void Render(ConsoleFramebuffer* consol);
 	std::string getStudio();
 	std::string getPegi();
-	std::string getGender();
+	std::string getGenre();
 	bool operator ==(VideoGame& VideoGame);
 private:
 	std::string m_Studio;
 	std::string m_Pegi;
-	std::string m_Gender;
+	std::string m_Genre;
 };

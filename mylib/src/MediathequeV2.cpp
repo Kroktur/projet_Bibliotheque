@@ -229,12 +229,12 @@ std::vector<Entity*> MediaLibrary::Search(std::vector<Entity*> list, search Sear
 				result.push_back(idx);
 		}
 	}
-	if (Search == Gender_Search)
+	if (Search == Genre_Search)
 	{
 		list = findType(VideGame_Type, list);
 		for (auto& idx : list)
 		{
-			if (static_cast<VideoGame*>(idx)->getGender() == reSearch)
+			if (static_cast<VideoGame*>(idx)->getGenre() == reSearch)
 				result.push_back(idx);
 		}
 	}

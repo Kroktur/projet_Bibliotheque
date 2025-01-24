@@ -12,7 +12,7 @@ public:
     ConsoleFramebufferPrivateImpl();
     void show();
     void setString(std::string text, Color color = White, Color backColor = Black);
-    void updateSze();
+    void updateSize();
     void writeConsol();
     std::string getLastCommand();
     void clear();
@@ -38,13 +38,13 @@ private:
     int m_idx;
     bool m_IsRunning;
     std::string m_lastCommand;
-    std::vector<std::string> m_historique;
+    std::vector<std::string> m_historical;
     std::vector <std::string> m_toWrite;
     std::vector <Color> m_colorToWrite;
     std::vector <Color> m_backColorToWrite;
 };
 
-void ConsoleFramebufferPrivateImpl::updateSze()
+void ConsoleFramebufferPrivateImpl::updateSize()
 {
     CONSOLE_SCREEN_BUFFER_INFO sbi;
     BOOL result = GetConsoleScreenBufferInfo(m_handleoutput, &sbi);
@@ -67,10 +67,10 @@ void ConsoleFramebufferPrivateImpl::writeConsol()
         if (key == '\r') //if ENTER is pressed
         {
             //Save the last command
-            m_lastCommand = m_historique[m_idx];
+            m_lastCommand = m_historical[m_idx];
             // Duplicate the last string
-            if (m_idx != m_historique.size() - 1)
-                copyStringToEnd(m_historique[m_idx]);
+            if (m_idx != m_historical.size() - 1)
+                copyStringToEnd(m_historical[m_idx]);
            // Create a new string
             std::string newstring;
             changeIdxToEnd(newstring);
@@ -83,23 +83,23 @@ void ConsoleFramebufferPrivateImpl::writeConsol()
         }
         else if (virtualKey == VK_DOWN) //if Down is pressed
         {
-            if (m_idx == m_historique.size() - 1)
+            if (m_idx == m_historical.size() - 1)
                 return;
             ++m_idx;
         }
         else if (key >= 32)
         {
             // Duplicate the last string
-            if (m_idx != m_historique.size() - 1)
-                copyStringToEnd(m_historique[m_idx]);
-            m_historique[m_idx] += key;
+            if (m_idx != m_historical.size() - 1)
+                copyStringToEnd(m_historical[m_idx]);
+            m_historical[m_idx] += key;
         }
-        else if (key == '\b' && !m_historique.back().empty())
+        else if (key == '\b' && !m_historical.back().empty())
         {
             // Duplicate the last string
-            if (m_idx != m_historique.size() - 1)
-                copyStringToEnd(m_historique[m_idx]);
-            m_historique[m_idx].pop_back();
+            if (m_idx != m_historical.size() - 1)
+                copyStringToEnd(m_historical[m_idx]);
+            m_historical[m_idx].pop_back();
         }
        
     }
@@ -130,8 +130,8 @@ void ConsoleFramebufferPrivateImpl::copyStringToEnd(std::string string)
 
 void ConsoleFramebufferPrivateImpl::changeIdxToEnd(std::string& string)
 {
-    m_historique.push_back(string);
-    m_idx = m_historique.size() - 1;
+    m_historical.push_back(string);
+    m_idx = m_historical.size() - 1;
 }
 
 
@@ -140,10 +140,10 @@ void ConsoleFramebufferPrivateImpl::changeIdxToEnd(std::string& string)
 ConsoleFramebufferPrivateImpl::ConsoleFramebufferPrivateImpl() :m_handleoutput(GetStdHandle(STD_OUTPUT_HANDLE)), m_handleinput(::GetStdHandle(STD_INPUT_HANDLE)),m_idx(0), m_IsRunning(true)
 {
     //prepare the first command
-    m_historique.reserve(1);
-    m_historique.resize(1);
-    updateSze();
-   setString("-------New Consol-------", Color::Blue, Color::Black);
+    m_historical.reserve(1);
+    m_historical.resize(1);
+    updateSize();
+  
 }
 
 
@@ -242,15 +242,15 @@ void ConsoleFramebufferPrivateImpl::setString(int row, int i)
 }
 void ConsoleFramebufferPrivateImpl::eraseEmtpyHistorique()
 {
-    for (auto i = 0; i < m_historique.size() - 1; ++i)
+    for (auto i = 0; i < m_historical.size() - 1; ++i)
     {
-        if (m_historique[i] != "")
+        if (m_historical[i] != "")
             continue;
-        auto it = std::find(m_historique.begin(), m_historique.end(), m_historique[i]);
-        if (it != m_historique.end())
+        auto it = std::find(m_historical.begin(), m_historical.end(), m_historical[i]);
+        if (it != m_historical.end())
         {
             --m_idx;
-            m_historique.erase(it);
+            m_historical.erase(it);
             --i;
         }
     }
@@ -266,9 +266,9 @@ void ConsoleFramebufferPrivateImpl::printText()
         ++row;
     }
     //write what you write
-    for (int idx = 0; idx < m_historique[m_idx].size(); ++idx)
+    for (int idx = 0; idx < m_historical[m_idx].size(); ++idx)
     {
-        setCharacter(row, idx, m_historique[m_idx][idx], White, Black);
+        setCharacter(row, idx, m_historical[m_idx][idx], White, Black);
     }
 }
 
@@ -293,7 +293,7 @@ void ConsoleFramebuffer::show()
 
 void ConsoleFramebuffer::updateSize()
 {
-    m_impl->updateSze();
+    m_impl->updateSize();
 }
 
 void ConsoleFramebuffer::writeConsol()

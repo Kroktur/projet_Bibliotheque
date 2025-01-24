@@ -266,7 +266,7 @@ bool Film::operator==(Film& film)
 VideoGame::VideoGame(std::string Title, std::string studio, std::string pegi, std::string gender):
 m_Studio(studio)
 ,m_Pegi(pegi)
-,m_Gender(gender)
+,m_Genre(gender)
 ,IMedia(Title,VideGame_Type)
 {}
 
@@ -300,7 +300,7 @@ void VideoGame::Render(ConsoleFramebuffer* consol)
 	consol->setString(m_Pegi);
 	//Gender
 	consol->setString("---Gender---", Color::Blue);
-	consol->setString(m_Gender);
+	consol->setString(m_Genre);
 	//status
 	consol->setString("---Status---", Color::Blue);
 	if (m_Status == Available_Status)
@@ -319,9 +319,9 @@ std::string VideoGame::getPegi()
 	return m_Pegi;
 }
 
-std::string VideoGame::getGender()
+std::string VideoGame::getGenre()
 {
-	return m_Gender;
+	return m_Genre;
 }
 
 bool VideoGame::operator==(VideoGame& VideoGame)
@@ -332,7 +332,7 @@ bool VideoGame::operator==(VideoGame& VideoGame)
 		return false;
 	if (m_Pegi != VideoGame.getPegi())
 		return false;
-	if (m_Gender != VideoGame.getGender())
+	if (m_Genre != VideoGame.getGenre())
 		return false;
 	return true;
 }

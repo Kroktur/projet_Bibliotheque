@@ -245,6 +245,19 @@ private:
 
 	std::vector<StringOperand*> m_operand;
 };
+//Help Command
+class HelpCommand : public ICommand
+{
+public:
+	HelpCommand();
+	HelpCommand(std::vector<StringOperand*> operand);
+	ICommand* Clone(std::vector<StringOperand*> operand) override;
+	void Execute(ConsoleFramebuffer* console, MediaLibrary* library) override;
+private:
+
+
+	std::vector<StringOperand*> m_operand;
+};
 //Exit Command
 class ExitCommand : public ICommand
 {

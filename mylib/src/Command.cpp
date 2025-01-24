@@ -21,9 +21,9 @@ search interpret(StringOperand* operand)
 		return FirstName_Search;
 	if (operand->getInformation() == "Age")
 		return Age_Search;
-	if (operand->getInformation() == "EmailAddress")
+	if (operand->getInformation() == "Email")
 		return EmailAddress_Search;
-	if (operand->getInformation() == "PhoneNumber")
+	if (operand->getInformation() == "Phone")
 		return PhoneNumber_Search;
 	if (operand->getInformation() == "Title")
 		return Title_Search;
@@ -37,8 +37,8 @@ search interpret(StringOperand* operand)
 		return Studio_Search;
 	if (operand->getInformation() == "Pegi")
 		return Pegi_Search;
-	if (operand->getInformation() == "Gender")
-		return Gender_Search;
+	if (operand->getInformation() == "Genre")
+		return Genre_Search;
 	if (operand->getInformation() == "Status")
 		return Status_Search;
 	return Invalid_Search;
@@ -694,6 +694,78 @@ void clearCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 	console->setString("---Clear Succes---", Color::Green, Color::Black);
 	console->setString("-------New Consol-------", Color::Blue, Color::Black);
 }
+//Help Command
+HelpCommand::HelpCommand()
+{
+}
+HelpCommand::HelpCommand(std::vector<StringOperand*> operand):m_operand(operand)
+{
+}
+ICommand* HelpCommand::Clone(std::vector<StringOperand*> operand)
+{
+	return new HelpCommand(operand);
+}
+void HelpCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
+{
+	console->setString("---Help---", Color::Blue, Color::Black);
+	//Global information
+	console->setString("---Global Information ---", Color::Blue, Color::Black);
+	console->setString("Important: <> Are used to represent commands but are recognized as words", Color::Red, Color::Black);
+	console->setString(" Exemple <Show> : Use it like this : Show", Color::Green, Color::Black);
+	// Argument Method
+	console->setString("Important: to write and search words with spaces you need \" <word with space> \" And Respect Space", Color::Red, Color::Black);
+	console->setString(" Exemple : \"Le Super Livre Titi\"", Color::Green, Color::Black);
+	//Base Command
+	console->setString("---Base Command---", Color::Blue, Color::Black);
+	console->setString("Base Command : <Add> <Show> <Search> <Rent> <Return> <Remove> <Clear> <Exit> ", Color::Blue, Color::Black);
+	console->setString(" Exemple : Add ....", Color::Green, Color::Black);
+	// Argument Method
+	console->setString("--- Argument search Method --- ", Color::Blue, Color::Black);
+	console->setString("Important: Argument search method is used in several places  ", Color::Red, Color::Black);
+	// Argument Method
+	console->setString(" Argument search Method: Works in pairs infinitely you need 1 Argument and 1 Personnal Search ", Color::Blue, Color::Black);
+	console->setString(" Argument : <Name> <FirstName> <Age> <Email> <Phone> <Title> <ISBN> <Support> <AgeRestriction> <Studio> <Pegi> <Genre> <Status>", Color::Blue, Color::Black);
+	console->setString(" Important: <Status> recognize only 2 Word : Available / Borrowed  ", Color::Red, Color::Black);
+	console->setString(" Exemple : Command Name Arthur FirstName Blanchet Age 19 ...", Color::Green, Color::Black);
+	//Add
+	console->setString("---Add--- ", Color::Blue, Color::Black);
+	console->setString("Add Command : <Client> <Book> <Film> <VideoGame> ", Color::Blue, Color::Black);
+	// Add
+	console->setString("Client Command : Name FirstName Age Email PhoneNumber", Color::Blue, Color::Black);
+	console->setString("Book Command : Title ISBN", Color::Blue, Color::Black);
+	console->setString("Film Command : Title Support AgeRestriction ", Color::Blue, Color::Black);
+	console->setString("VideoGame Command : Title Studio Pegi Genre ", Color::Blue, Color::Black);
+	console->setString(" Exemple : Add Client Arthur Blanchet 18 ablanchet@gaming.tech 06435065## ", Color::Green, Color::Black);
+	// Show
+	console->setString("---Show--- ", Color::Blue, Color::Black);
+	console->setString("Show Command : <Client> <Book> <Film> <VideoGame> <Media> <All> ", Color::Blue, Color::Black);
+	console->setString(" Exemple : Show All ", Color::Green, Color::Black);
+	//Search
+	console->setString("---Search--- ", Color::Blue, Color::Black);
+	//Search
+	console->setString(" Use Argument search", Color::Red, Color::Black);
+	console->setString(" Exemple : Search Title EldenRing Status Available ", Color::Green, Color::Black);
+	// Rent
+	console->setString("---Rent--- ", Color::Blue, Color::Black);
+	console->setString(" Use Argument search", Color::Red, Color::Black);
+	console->setString("Rend Command: First Argument Search For Client Search other For Media ", Color::Blue, Color::Black);
+	console->setString(" Exemple : Rent Name Arthur Title EldenRing Status Available ...", Color::Green, Color::Black);
+	//return
+	console->setString("---Return--- ", Color::Blue, Color::Black);
+	console->setString(" Use Argument search", Color::Red, Color::Black);
+	console->setString("Return Command: First Argument Search For Client Search other For Media ", Color::Blue, Color::Black);
+	console->setString(" Exemple : Return Name Arthur Title EldenRing Status Available ...", Color::Green, Color::Black);
+	//remove
+	console->setString("---Remove--- ", Color::Blue, Color::Black);
+	console->setString(" Use Argument search", Color::Red, Color::Black);
+	console->setString(" Exemple : Remove Name Arthur FirstName Blanchet ...", Color::Green, Color::Black);
+	//Clear
+	console->setString("---Clear--- ", Color::Blue, Color::Black);
+	console->setString(" Use : Clear ", Color::Green, Color::Black);
+	//Exit
+	console->setString("---Exit--- ", Color::Blue, Color::Black);
+	console->setString(" Use : Exit ", Color::Green, Color::Black);
+}
 //Exit Command
 ExitCommand::ExitCommand()
 {
@@ -709,3 +781,5 @@ void ExitCommand::Execute(ConsoleFramebuffer* console, MediaLibrary* library)
 {
 	console->CloseWindow();
 }
+
+

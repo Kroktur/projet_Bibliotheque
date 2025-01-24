@@ -6,6 +6,7 @@ Database::Database():m_console(new ConsoleFramebuffer), m_Library(new MediaLibra
 
 Database::~Database()
 {
+	// delete all Component
 	delete m_console;
 	m_console = nullptr;
 	delete m_Library;
@@ -18,6 +19,8 @@ Database::~Database()
 
 void Database::Exe()
 {
+	m_console->setString("-------New Console-------", Color::Blue, Color::Black);
+	//While IsRunning Show in the terminal
 	while (m_console->IsRunning())
 	{
 		m_console->writeConsol();
